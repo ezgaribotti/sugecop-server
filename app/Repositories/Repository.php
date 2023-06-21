@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use App\Entities\Entity;
+use App\Exceptions\Api\CustomMessageException;
 use App\Interfaces\RepositoryInterface;
+use Exception;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -21,7 +23,15 @@ abstract class Repository implements RepositoryInterface
 
     public function create(array $data)
     {
-        return $this->entity->create($data);
+        try {
+            return $this->entity->create($data);
+
+        } catch (Exception $exception) {
+
+            $message = 'Ocurrió un problema al crear el recurso.';
+
+            throw new CustomMessageException($message);
+        }
     }
 
     public function find($id)
@@ -29,14 +39,32 @@ abstract class Repository implements RepositoryInterface
         return $this->entity->findOrFail($id);
     }
 
-    public function update(array $data, $id)
+    public function update(array $data, $id): void
     {
-        return $this->entity->findOrFail($id)->update($data);
+        $entity = $this->entity->findOrFail($id);
+        try {
+            $entity->update($data);
+
+        } catch (Exception $exception) {
+
+            $message = 'Ocurrió un problema al actualizar el recurso con id 0.';
+
+            throw new CustomMessageException($message, [$id]);
+        }
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
-        return $this->entity->findOrFail($id)->delete();
+        $entity = $this->entity->findOrFail($id);
+        try {
+            $entity->delete();
+
+        } catch (Exception $exception) {
+
+            $message = 'Ocurrió un problema al borrar el recurso con id 0.';
+
+            throw new CustomMessageException($message, [$id]);
+        }
     }
 
     public function count()
