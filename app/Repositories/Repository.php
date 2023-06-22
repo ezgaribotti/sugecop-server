@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Entities\Entity;
-use App\Exceptions\Api\CustomMessageException;
+use App\Exceptions\Api\MessageException;
 use App\Interfaces\RepositoryInterface;
 use Exception;
 
@@ -30,7 +30,7 @@ abstract class Repository implements RepositoryInterface
 
             $message = 'Ocurrió un problema al crear el recurso.';
 
-            throw new CustomMessageException($message);
+            throw new MessageException($message);
         }
     }
 
@@ -49,7 +49,7 @@ abstract class Repository implements RepositoryInterface
 
             $message = 'Ocurrió un problema al actualizar el recurso con id 0.';
 
-            throw new CustomMessageException($message, [$id]);
+            throw new MessageException($message, [$id]);
         }
     }
 
@@ -63,7 +63,7 @@ abstract class Repository implements RepositoryInterface
 
             $message = 'Ocurrió un problema al borrar el recurso con id 0.';
 
-            throw new CustomMessageException($message, [$id]);
+            throw new MessageException($message, [$id]);
         }
     }
 

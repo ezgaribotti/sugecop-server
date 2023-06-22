@@ -21,6 +21,15 @@ abstract class Dto
 
     public function toArray(): array
     {
-        return get_object_vars($this);
+        $result = [];
+        foreach ($this as $key => $value) {
+            if ($value instanceof Dto) {
+                $result[$key] = get_object_vars($value);
+
+            } else {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
     }
 }
