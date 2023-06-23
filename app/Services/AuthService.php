@@ -42,6 +42,6 @@ class AuthService
 
         $message = 'Las credenciales ingresadas no son válidas.';
 
-        throw new MessageException($message, null, 400);
+        throw new MessageException($message, [], 400);
     }
 }

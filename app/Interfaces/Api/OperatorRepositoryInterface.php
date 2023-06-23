@@ -6,7 +6,7 @@ use App\Interfaces\RepositoryInterface;
 
 interface OperatorRepositoryInterface extends RepositoryInterface
 {
-    public function getByUsernameOrInternalCode(string $parameter);
+    public function getByUsernameOrInternalCode(string $username);
 
     public function getByEmail(string $email);
 }

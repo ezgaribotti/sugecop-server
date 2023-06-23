@@ -8,7 +8,7 @@ use Throwable;
 
 class MessageException extends Exception
 {
-    public function __construct(string $message, ?array $replace = null, int $statusCode = 500, ?Throwable $previous = null)
+    public function __construct(string $message, array $replace = [], int $statusCode = 500, ?Throwable $previous = null)
     {
         $message = MessageHelper::build($message, $replace);
 

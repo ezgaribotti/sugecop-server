@@ -32,4 +32,15 @@ abstract class Dto
         }
         return $result;
     }
+
+    public function toTransferArray(): array
+    {
+        $result = [];
+        foreach ($this as $key => $value) {
+            if ($value !== null) {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
 }
