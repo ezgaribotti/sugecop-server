@@ -2,9 +2,10 @@
 
 namespace App\Exceptions;
 
-use App\Exceptions\Api\CustomMessageException;
+use App\Exceptions\Api\MessageException;
 use App\Helpers\MessageHelper;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -53,8 +54,15 @@ class Handler extends ExceptionHandler
             return response()->error($exception->getMessage(), 404);
         });
 
-        $this->renderable(function (CustomMessageException $exception) {
-            return response()->error($exception->getMessage());
+        $this->renderable(function (AuthenticationException $exception) {
+
+            $message = 'No autenticado.';
+
+            return response()->error($message, 401);
+        });
+
+        $this->renderable(function (MessageException $exception) {
+            return response()->error($exception->getMessage(), $exception->getCode());
         });
 
         $this->renderable(function (Exception $exception) {

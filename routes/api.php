@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\OperatorController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/operator-profile', 'operatorProfile');
+        Route::get('/logout', 'logout');
+    });
 });
 
 Route::controller(OperatorController::class)->group(function () {
@@ -25,4 +32,14 @@ Route::controller(OperatorController::class)->group(function () {
     Route::get('/operators/{id}', 'show');
     Route::put('/operators/{id}', 'update');
     Route::delete('/operators/{id}', 'destroy');
+});
+
+Route::get('/genders', [GenderController::class, 'index']);
+
+Route::controller(CustomerController::class)->group(function () {
+    Route::get('/customers', 'index');
+    Route::post('/customers', 'store');
+    Route::get('/customers/{id}', 'show');
+    Route::put('/customers/{id}', 'update');
+    Route::delete('/customers/{id}', 'destroy');
 });

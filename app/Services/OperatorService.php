@@ -31,7 +31,7 @@ class OperatorService
         $data->setPassword(Hash::make($data->getPassword()));
 
         return new OperatorDto(
-            $this->operatorRepository->create($data->toArray())
+            $this->operatorRepository->create($data->toTransferArray())
         );
     }
 
@@ -48,7 +48,7 @@ class OperatorService
             $data->setPassword(Hash::make($data->getPassword()));
         }
 
-        $this->operatorRepository->update($data->toArray(), $id);
+        $this->operatorRepository->update($data->toTransferArray(), $id);
     }
 
     public function deleteById($id): void
