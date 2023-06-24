@@ -39,6 +39,14 @@ abstract class Repository implements RepositoryInterface
         return $this->entity->findOrFail($id);
     }
 
+    public function relations($id, array $relations = null)
+    {
+        $entity = $this->entity;
+        if ($relations) $entity = $entity->with($relations);
+
+        return $entity->findOrFail($id);
+    }
+
     public function update(array $data, $id): void
     {
         $entity = $this->entity->findOrFail($id);

@@ -10,6 +10,8 @@ interface RepositoryInterface
 
     public function find($id);
 
+    public function relations($id, array $relations);
+
     public function update(array $data, $id);
 
     public function delete($id);

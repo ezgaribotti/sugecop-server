@@ -13,8 +13,10 @@ abstract class Dto
         }
 
         foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
+            if (!is_array($value)) {
+                if (property_exists($this, $key)) {
+                    $this->$key = $value;
+                }
             }
         }
     }
