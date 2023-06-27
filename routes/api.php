@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\GenderController;
+use App\Http\Controllers\Api\IdentificationController;
+use App\Http\Controllers\Api\IdentificationTypeController;
 use App\Http\Controllers\Api\OperatorController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +44,12 @@ Route::controller(CustomerController::class)->group(function () {
     Route::get('/customers/{id}', 'show');
     Route::put('/customers/{id}', 'update');
     Route::delete('/customers/{id}', 'destroy');
+});
+
+Route::get('/identification-types', [IdentificationTypeController::class, 'index']);
+
+Route::controller(IdentificationController::class)->group(function () {
+    Route::get('/identifications', 'index');
+    Route::post('/identifications', 'store');
+    Route::delete('/identifications/{id}', 'destroy');
 });
