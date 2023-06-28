@@ -17,9 +17,6 @@ class CustomerController extends Controller
         $this->customerService = $customerService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return response()->success(
@@ -27,9 +24,6 @@ class CustomerController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -57,9 +51,6 @@ class CustomerController extends Controller
         );
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         return response()->success(
@@ -67,9 +58,6 @@ class CustomerController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
@@ -96,9 +84,6 @@ class CustomerController extends Controller
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $this->customerService->deleteById($id);
