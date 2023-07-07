@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'georef_api' => [
+        'url' => env('GEOREF_API_URL'),
+    ],
 ];

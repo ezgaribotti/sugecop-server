@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\AddressNormalizationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\GenderController;
@@ -61,3 +62,5 @@ Route::controller(AddressController::class)->group(function () {
     Route::put('/addresses/{id}', 'update');
     Route::delete('/addresses/{id}', 'destroy');
 });
+
+Route::get('/address-normalization', [AddressNormalizationController::class, 'index']);
