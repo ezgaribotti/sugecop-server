@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\IdentificationController;
 use App\Http\Controllers\Api\IdentificationTypeController;
 use App\Http\Controllers\Api\OperatorController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,3 +73,12 @@ Route::controller(CategoryController::class)->group(function () {
     Route::put('/categories/{id}', 'update');
     Route::delete('/categories/{id}', 'destroy');
 });
+
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/products', 'index');
+    Route::post('/products', 'store');
+    Route::get('/products/{id}', 'show');
+    Route::put('/products/{id}', 'update');
+    Route::delete('/products/{id}', 'destroy');
+});
+
