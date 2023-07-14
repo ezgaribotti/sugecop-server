@@ -8,101 +8,53 @@ class AddressDto extends Dto
 {
     protected int $id;
     protected int $customer_id;
-    protected string $state;
-    protected string $city;
-    protected string $street_address;
+    protected string $province;
+    protected string $department;
+    protected string $locality;
+    protected string $street_name;
+    protected int $street_number;
     protected string $postal_code;
     protected ?string $reference = null;
     protected string $created_at;
     protected string $updated_at;
 
-    public function getId(): int
+    public function getProvince(): string
     {
-        return $this->id;
+        return $this->province;
     }
 
-    public function setId(int $id): void
+    public function setProvince(string $province): void
     {
-        $this->id = $id;
+        $this->province = $province;
     }
 
-    public function getCustomerId(): int
+    public function getDepartment(): string
     {
-        return $this->customer_id;
+        return $this->department;
     }
 
-    public function setCustomerId(int $customer_id): void
+    public function setDepartment(string $department): void
     {
-        $this->customer_id = $customer_id;
+        $this->department = $department;
     }
 
-    public function getState(): string
+    public function getLocality(): string
     {
-        return $this->state;
+        return $this->locality;
     }
 
-    public function setState(string $state): void
+    public function setLocality(string $locality): void
     {
-        $this->state = $state;
+        $this->locality = $locality;
     }
 
-    public function getCity(): string
+    public function getStreetName(): string
     {
-        return $this->city;
+        return $this->street_name;
     }
 
-    public function setCity(string $city): void
+    public function setStreetName(string $street_name): void
     {
-        $this->city = $city;
-    }
-
-    public function getStreetAddress(): string
-    {
-        return $this->street_address;
-    }
-
-    public function setStreetAddress(string $street_address): void
-    {
-        $this->street_address = $street_address;
-    }
-
-    public function getPostalCode(): string
-    {
-        return $this->postal_code;
-    }
-
-    public function setPostalCode(string $postal_code): void
-    {
-        $this->postal_code = $postal_code;
-    }
-
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    public function setReference(?string $reference): void
-    {
-        $this->reference = $reference;
-    }
-
-    public function getCreatedAt(): string
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(string $created_at): void
-    {
-        $this->created_at = $created_at;
-    }
-
-    public function getUpdatedAt(): string
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(string $updated_at): void
-    {
-        $this->updated_at = $updated_at;
+        $this->street_name = $street_name;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Dto\Api\AddressDto;
 use App\Dto\Requests\AddressTransferDto;
-use App\Helpers\DtoHelper;
+use App\Helpers\NormalizeAddressHelper;
 use App\Interfaces\Api\AddressRepositoryInterface;
 
 class AddressService
@@ -20,7 +20,28 @@ class AddressService
     {
         $addresses = $this->addressRepository->getByCustomerId($customerId);
 
-        return DtoHelper::collectData($addresses, new AddressDto());
+        $result = [];
+        foreach ($addresses as $address) {
+            $location = new AddressDto($address);
+            $locations = [
+                $location->getProvince(),
+                $location->getDepartment(),
+                $location->getLocality(),
+                $location->getStreetName()
+            ];
+
+            foreach ($locations as $key => $value) {
+                if (intval($value)) {
+                    $reference = NormalizeAddressHelper::search($key, $value);
+                    if ($key === 0) $location->setProvince($reference);
+                    if ($key === 1) $location->setDepartment($reference);
+                    if ($key === 2) $location->setLocality($reference);
+                    if ($key === 3) $location->setStreetName($reference);
+                }
+            }
+            $result[] = $location;
+        }
+        return collect($result);
     }
 
     public function save(AddressTransferDto $data): AddressDto
@@ -28,11 +49,6 @@ class AddressService
         return new AddressDto(
             $this->addressRepository->create($data->toTransferArray())
         );
-    }
-
-    public function updatedById(AddressTransferDto $data, $id): void
-    {
-        $this->addressRepository->update($data->toTransferArray(), $id);
     }
 
     public function deleteById($id): void
