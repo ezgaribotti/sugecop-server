@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\NormalizeAddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
@@ -63,3 +64,11 @@ Route::controller(AddressController::class)->group(function () {
 });
 
 Route::get('/normalize-addresses', [NormalizeAddressController::class, 'index']);
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/categories', 'index');
+    Route::post('/categories', 'store');
+    Route::get('/categories/{id}', 'show');
+    Route::put('/categories/{id}', 'update');
+    Route::delete('/categories/{id}', 'destroy');
+});
