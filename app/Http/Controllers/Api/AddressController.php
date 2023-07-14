@@ -44,9 +44,11 @@ class AddressController extends Controller
                 'integer',
                 Rule::exists('customers', 'id')
             ],
-            'state' => 'required',
-            'city' => 'required',
-            'street_address' => 'required',
+            'province' => 'required',
+            'department' => 'required',
+            'locality' => 'required',
+            'street_name' => 'required',
+            'street_number' => 'required|integer',
             'postal_code' => 'required',
             'reference' => 'max:255'
         ]);
@@ -58,33 +60,9 @@ class AddressController extends Controller
         );
     }
 
-    public function update(Request $request, string $id)
-    {
-        $validated = $request->validate([
-            'customer_id' => [
-                'bail',
-                'required',
-                'integer',
-                Rule::exists('customers', 'id')
-            ],
-            'state' => 'required',
-            'city' => 'required',
-            'street_address' => 'required',
-            'postal_code' => 'required',
-            'reference' => 'max:255'
-        ]);
-
-        $data = new AddressTransferDto($validated);
-
-        return response()->success(
-            $this->addressService->updatedById($data, $id)
-        );
-    }
-
     public function destroy(string $id)
     {
-        return response()->success(
-            $this->addressService->deleteById($id)
-        );
+        $this->addressService->deleteById($id);
+        return response()->success();
     }
 }

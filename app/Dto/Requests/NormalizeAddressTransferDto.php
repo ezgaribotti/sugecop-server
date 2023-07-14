@@ -4,9 +4,9 @@ namespace App\Dto\Requests;
 
 use App\Dto\Dto;
 
-class AddressNormalizationTransferDto extends Dto
+class NormalizeAddressTransferDto extends Dto
 {
-    protected int $step;
+    protected int $type;
     protected ?array $parameters = [];
 
     public function getParameters(): ?array
@@ -19,8 +19,13 @@ class AddressNormalizationTransferDto extends Dto
         $this->parameters = $parameters;
     }
 
-    public function getStep(): int
+    public function getType(): int
     {
-        return $this->step;
+        return $this->type;
+    }
+
+    public function setType(int $type): void
+    {
+        $this->type = $type;
     }
 }

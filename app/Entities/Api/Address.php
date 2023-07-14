@@ -11,9 +11,11 @@ class Address extends Entity
 
     protected $fillable = [
         'customer_id',
-        'state',
-        'city',
-        'street_address',
+        'province',
+        'department',
+        'locality',
+        'street_name',
+        'street_number',
         'postal_code',
         'reference',
     ];

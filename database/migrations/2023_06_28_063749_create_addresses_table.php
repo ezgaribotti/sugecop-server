@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers');
-            $table->string('state');
-            $table->string('city');
-            $table->string('street_address');
+            $table->string('province');
+            $table->string('department');
+            $table->string('locality');
+            $table->string('street_name');
+            $table->integer('street_number');
             $table->string('postal_code');
             $table->text('reference')->nullable();
             $table->timestamps();

@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Dto\Requests\AddressNormalizationTransferDto;
+use App\Dto\Requests\NormalizeAddressTransferDto;
 use App\Http\Controllers\Controller;
-use App\Services\AddressNormalizationService;
+use App\Services\NormalizeAddressService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class AddressNormalizationController extends Controller
+class NormalizeAddressController extends Controller
 {
-    protected $addressNormalizationService;
+    protected $normalizeAddressService;
 
-    public function __construct(AddressNormalizationService $addressNormalizationService)
+    public function __construct(NormalizeAddressService $normalizeAddressService)
     {
-        $this->addressNormalizationService = $addressNormalizationService;
+        $this->normalizeAddressService = $normalizeAddressService;
     }
 
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'step' => [
+            'type' => [
                 'bail',
                 'required',
                 'integer',
@@ -28,11 +28,11 @@ class AddressNormalizationController extends Controller
             ]
         ]);
 
-        $data = new AddressNormalizationTransferDto($validated);
+        $data = new NormalizeAddressTransferDto($validated);
         $data->setParameters(array_diff($request->all(), $validated));
 
         return response()->success(
-            $this->addressNormalizationService->normalize($data)
+            $this->normalizeAddressService->normalize($data)
         );
     }
 }

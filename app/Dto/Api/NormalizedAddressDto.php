@@ -4,13 +4,18 @@ namespace App\Dto\Api;
 
 use App\Dto\Dto;
 
-class AddressNormalizationDto extends Dto
+class NormalizedAddressDto extends Dto
 {
-    protected int $id;
+    protected string $id;
     protected string $name;
 
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }
