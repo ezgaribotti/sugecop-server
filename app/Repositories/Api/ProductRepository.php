@@ -17,6 +17,6 @@ class ProductRepository extends Repository implements ProductRepositoryInterface
     {
         $query = Product::query();
         $query->where('name', $name);
-        return $query->firstOrFail();
+        return $query->first();
     }
 }

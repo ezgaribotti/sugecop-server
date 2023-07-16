@@ -16,4 +16,14 @@ class ProductDto extends Dto
     protected string $description;
     protected string $created_at;
     protected string $updated_at;
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getImageName(): string
+    {
+        return $this->image_name;
+    }
 }
