@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\IdentificationController;
 use App\Http\Controllers\Api\IdentificationTypeController;
 use App\Http\Controllers\Api\OperatorController;
+use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UploadImageController;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +76,8 @@ Route::controller(CategoryController::class)->group(function () {
     Route::delete('/categories/{id}', 'destroy');
 });
 
+Route::post('/upload-images', [UploadImageController::class, 'index']);
+
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index');
     Route::post('/products', 'store');
@@ -83,4 +86,4 @@ Route::controller(ProductController::class)->group(function () {
     Route::delete('/products/{id}', 'destroy');
 });
 
-Route::post('/upload-image', [UploadImageController::class, 'index']);
+Route::get('/order-statuses', [OrderStatusController::class, 'index']);
