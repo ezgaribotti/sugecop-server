@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\NormalizeAddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
@@ -8,6 +9,8 @@ use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\IdentificationController;
 use App\Http\Controllers\Api\IdentificationTypeController;
 use App\Http\Controllers\Api\OperatorController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UploadImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,3 +66,21 @@ Route::controller(AddressController::class)->group(function () {
 });
 
 Route::get('/normalize-addresses', [NormalizeAddressController::class, 'index']);
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/categories', 'index');
+    Route::post('/categories', 'store');
+    Route::get('/categories/{id}', 'show');
+    Route::put('/categories/{id}', 'update');
+    Route::delete('/categories/{id}', 'destroy');
+});
+
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/products', 'index');
+    Route::post('/products', 'store');
+    Route::get('/products/{id}', 'show');
+    Route::put('/products/{id}', 'update');
+    Route::delete('/products/{id}', 'destroy');
+});
+
+Route::post('/upload-image', [UploadImageController::class, 'index']);

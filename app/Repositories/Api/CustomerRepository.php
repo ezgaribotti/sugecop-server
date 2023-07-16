@@ -17,7 +17,6 @@ class CustomerRepository extends Repository implements CustomerRepositoryInterfa
     {
         $query = Customer::query();
         $query->where('email', $email);
-
-        return $query->firstOrFail();
+        return $query->first();
     }
 }

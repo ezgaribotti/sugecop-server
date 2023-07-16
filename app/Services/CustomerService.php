@@ -9,8 +9,6 @@ use App\Dto\Requests\CustomerTransferDto;
 use App\Exceptions\Api\MessageException;
 use App\Helpers\DtoHelper;
 use App\Interfaces\Api\CustomerRepositoryInterface;
-use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 class CustomerService
@@ -50,29 +48,18 @@ class CustomerService
 
     public function updateById(CustomerTransferDto $data, $id): void
     {
-        $customerFound = false;
-        $customer = $this->customerRepository->find($id);
+        $customer = new CustomerDto($this->customerRepository->find($id));
 
-        if ($customer->email === $data->getEmail()) {
-            $this->customerRepository->update($data->toTransferArray(), $id);
+        if ($customer->getEmail() !== $data->getEmail()) {
+            if ($this->customerRepository->getByEmail($data->getEmail())) {
 
-        } else {
-            try {
-                $this->customerRepository->getByEmail($data->getEmail());
-                $customerFound = true;
+                $message = 'El correo electrónico ingresado ya está en uso.';
 
-            } catch (Exception $exception) {
-                if ($exception instanceof ModelNotFoundException) {
-                    $this->customerRepository->update($data->toTransferArray(), $id);
-                }
+                throw new MessageException($message, [], 422);
             }
         }
 
-        if ($customerFound) {
-            $message = 'El correo electrónico ingresado ya está en uso.';
-
-            throw new MessageException($message, [], 422);
-        }
+        $this->customerRepository->update($data->toTransferArray(), $id);
     }
 
     public function deleteById($id): void
