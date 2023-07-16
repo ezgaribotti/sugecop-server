@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\IdentificationController;
 use App\Http\Controllers\Api\IdentificationTypeController;
 use App\Http\Controllers\Api\OperatorController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UploadImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,3 +83,4 @@ Route::controller(ProductController::class)->group(function () {
     Route::delete('/products/{id}', 'destroy');
 });
 
+Route::post('/upload-image', [UploadImageController::class, 'index']);

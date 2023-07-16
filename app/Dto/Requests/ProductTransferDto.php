@@ -18,4 +18,9 @@ class ProductTransferDto extends Dto
     {
         return $this->name;
     }
+
+    public function getImageName(): string
+    {
+        return $this->image_name;
+    }
 }

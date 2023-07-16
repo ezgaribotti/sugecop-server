@@ -11,6 +11,7 @@ use App\Interfaces\Api\ProductRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class ProductService
 {
@@ -30,6 +31,18 @@ class ProductService
 
     public function save(ProductTransferDto $data): ProductDto
     {
+        $path = config('filesystems.storages.image');
+
+        $fullPath = $path . chr(47) . $data->getImageName();
+
+        if (!Storage::exists($fullPath)) {
+
+            $message = 'Imagen no encontrada en el almacenamiento.';
+
+            throw new MessageException($message, [], 422);
+
+        }
+
         return new ProductDto(
             $this->productRepository->create($data->toTransferArray())
         );
