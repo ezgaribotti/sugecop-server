@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\IdentificationController;
 use App\Http\Controllers\Api\IdentificationTypeController;
 use App\Http\Controllers\Api\OperatorController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UploadImageController;
@@ -87,3 +88,11 @@ Route::controller(ProductController::class)->group(function () {
 });
 
 Route::get('/order-statuses', [OrderStatusController::class, 'index']);
+
+Route::controller(OrderController::class)->group(function () {
+    Route::get('/orders', 'index');
+    Route::post('/orders', 'store');
+    Route::get('/orders/{id}', 'show');
+    Route::put('/orders/{id}', 'update');
+    Route::delete('/orders/{id}', 'destroy');
+});
