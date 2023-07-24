@@ -20,4 +20,14 @@ class OrderDto extends Dto
     {
         $this->order_status = $order_status;
     }
+
+    public function setTotalAmount(float $total_amount): void
+    {
+        $this->total_amount = $total_amount;
+    }
+
+    public function getTotalAmount(): float
+    {
+        return $this->total_amount;
+    }
 }

@@ -26,4 +26,24 @@ class ProductDto extends Dto
     {
         return $this->image_name;
     }
+
+    public function getActive(): int
+    {
+        return $this->active;
+    }
+
+    public function getUnitPrice(): float
+    {
+        return $this->unit_price;
+    }
+
+    public function setStock(int $stock): void
+    {
+        $this->stock = $stock;
+    }
+
+    public function getStock(): int
+    {
+        return $this->stock;
+    }
 }

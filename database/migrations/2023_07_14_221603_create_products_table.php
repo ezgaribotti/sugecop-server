@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('image_name');
-            $table->double('unit_price', 11);
+            $table->double('unit_price', 11, 2);
             $table->foreignId('category_id')->constrained('categories');
             $table->boolean('active')->default(1);
             $table->bigInteger('stock');
