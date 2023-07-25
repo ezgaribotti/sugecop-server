@@ -4,7 +4,7 @@ namespace App\Dto\Requests;
 
 use App\Dto\Dto;
 
-class ProductHasOrderTransferDto extends Dto
+class OrderDetailTransferDto extends Dto
 {
     protected int $product_id;
     protected int $order_id;

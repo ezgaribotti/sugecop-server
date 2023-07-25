@@ -4,7 +4,7 @@ namespace App\Dto\Api;
 
 use App\Dto\Dto;
 
-class ProductHasOrderDto extends Dto
+class OrderDetailDto extends Dto
 {
     protected int $order_id;
     protected int $quantity;

@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\OperatorController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\ProductHasOrderController;
+use App\Http\Controllers\Api\OrderDetailController;
 use App\Http\Controllers\Api\UploadImageController;
 use Illuminate\Support\Facades\Route;
 
@@ -98,7 +98,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::delete('/orders/{id}', 'destroy');
 });
 
-Route::controller(ProductHasOrderController::class)->group(function () {
-    Route::get('/product-has-order', 'index');
-    Route::post('/product-has-order', 'store');
+Route::controller(OrderDetailController::class)->group(function () {
+    Route::get('/order-details', 'index');
+    Route::post('/order-details', 'store');
 });

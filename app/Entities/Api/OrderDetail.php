@@ -6,11 +6,9 @@ use App\Entities\NoTimestamp;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProductHasOrder extends NoTimestamp
+class OrderDetail extends NoTimestamp
 {
     use HasFactory;
-
-    protected $table = 'product_has_order';
 
     protected $fillable = [
         'product_id',

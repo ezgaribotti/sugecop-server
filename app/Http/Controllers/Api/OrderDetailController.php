@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Dto\Requests\ProductHasOrderTransferDto;
+use App\Dto\Requests\OrderDetailTransferDto;
 use App\Http\Controllers\Controller;
-use App\Services\ProductHasOrderService;
+use App\Services\OrderDetailService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ProductHasOrderController extends Controller
+class OrderDetailController extends Controller
 {
-    protected $productHasOrderService;
+    protected $orderDetailService;
 
-    public function __construct(ProductHasOrderService $productHasOrderService)
+    public function __construct(OrderDetailService $orderDetailService)
     {
-        $this->productHasOrderService = $productHasOrderService;
+        $this->orderDetailService = $orderDetailService;
     }
 
     public function index(Request $request)
@@ -27,10 +27,10 @@ class ProductHasOrderController extends Controller
             ]
         ]);
 
-        $data = new ProductHasOrderTransferDto($validated);
+        $data = new OrderDetailTransferDto($validated);
 
         return response()->success(
-            $this->productHasOrderService->getByOrderId($data->getOrderId())
+            $this->orderDetailService->getByOrderId($data->getOrderId())
         );
     }
 
@@ -53,11 +53,11 @@ class ProductHasOrderController extends Controller
 
         $data = [];
         foreach ($request->items as $item) {
-            $data[] = new ProductHasOrderTransferDto(array_merge($item, $validated));
+            $data[] = new OrderDetailTransferDto(array_merge($item, $validated));
         }
 
         return response()->success(
-            $this->productHasOrderService->save($data)
+            $this->orderDetailService->save($data)
         );
     }
 }

@@ -4,37 +4,37 @@ namespace App\Services;
 
 use App\Dto\Api\OrderDto;
 use App\Dto\Api\ProductDto;
-use App\Dto\Api\ProductHasOrderDto;
-use App\Dto\Requests\ProductHasOrderTransferDto;
+use App\Dto\Api\OrderDetailDto;
+use App\Dto\Requests\OrderDetailTransferDto;
 use App\Exceptions\Api\MessageException;
 use App\Interfaces\Api\OrderRepositoryInterface;
-use App\Interfaces\Api\ProductHasOrderRepositoryInterface;
+use App\Interfaces\Api\OrderDetailRepositoryInterface;
 use App\Interfaces\Api\ProductRepositoryInterface;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class ProductHasOrderService
+class OrderDetailService
 {
-    protected $productHasOrderRepository;
+    protected $orderDetailRepository;
     protected $productRepository;
     protected $orderRepository;
 
-    public function __construct(ProductHasOrderRepositoryInterface $productHasOrderRepository, ProductRepositoryInterface $productRepository, OrderRepositoryInterface $orderRepository)
+    public function __construct(OrderDetailRepositoryInterface $orderDetailRepository, ProductRepositoryInterface $productRepository, OrderRepositoryInterface $orderRepository)
     {
-        $this->productHasOrderRepository = $productHasOrderRepository;
+        $this->orderDetailRepository = $orderDetailRepository;
         $this->productRepository = $productRepository;
         $this->orderRepository = $orderRepository;
     }
 
     public function getByOrderId(int $orderId): Collection
     {
-        $items = $this->productHasOrderRepository->getByOrderId($orderId);
+        $items = $this->orderDetailRepository->getByOrderId($orderId);
         $result = [];
-        foreach ($items as $key => $value) {
-            $item = new ProductHasOrderDto($value);
-            $item->setProduct(new ProductDto($value->product));
-            $result[] = $item;
+        foreach ($items as $item) {
+            $orderDetail = new OrderDetailDto($item);
+            $orderDetail->setProduct(new ProductDto($item->product));
+            $result[] = $orderDetail;
         }
         return collect($result);
     }
@@ -52,26 +52,26 @@ class ProductHasOrderService
         }
 
         $totalAmount = 0;
-        $clean = [];
+        $cleanData = [];
 
         foreach ($data as $value) {
-            if ($value instanceof ProductHasOrderTransferDto) {
+            if ($value instanceof OrderDetailTransferDto) {
                 $productId = $value->getProductId();
 
-                if (isset($clean[$productId])) {
-                    $clean[$productId]->setQuantity($clean[$productId]->getQuantity() + $value->getQuantity());
+                if (isset($cleanData[$productId])) {
+                    $cleanData[$productId]->setQuantity($cleanData[$productId]->getQuantity() + $value->getQuantity());
 
                 } else {
-                    $clean[$productId] = $value;
+                    $cleanData[$productId] = $value;
                 }
             }
         }
-        $data = array_values($clean);
+        $data = array_values($cleanData);
 
         DB::beginTransaction();
         try {
             foreach ($data as $value) {
-                if ($value instanceof ProductHasOrderTransferDto) {
+                if ($value instanceof OrderDetailTransferDto) {
                     $productId = $value->getProductId();
                     $product = new ProductDto($this->productRepository->find($productId));
 
@@ -83,7 +83,7 @@ class ProductHasOrderService
                             $fixedPrice = $product->getUnitPrice();
 
                             $value->setFixedPrice($fixedPrice);
-                            $this->productHasOrderRepository->create($value->toTransferArray());
+                            $this->orderDetailRepository->create($value->toTransferArray());
 
                             $product->setStock($stock - $quantity);
                             $this->productRepository->update($product->toTransferArray(), $productId);
@@ -97,14 +97,14 @@ class ProductHasOrderService
                     throw new MessageException($message, [$productId]);
                 }
             }
-            DB::commit();
-
         } catch (Exception $exception) {
 
             DB::rollBack();
 
             throw new Exception($exception->getMessage());
         }
+
+        DB::commit();
         $order->setTotalAmount(round($totalAmount, 2));
         $this->orderRepository->update($order->toTransferArray(), $orderId);
         return new OrderDto(
