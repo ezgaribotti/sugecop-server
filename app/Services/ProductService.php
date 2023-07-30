@@ -10,6 +10,7 @@ use App\Helpers\DtoHelper;
 use App\Helpers\ImageHelper;
 use App\Interfaces\Api\ProductRepositoryInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class ProductService
 {
@@ -56,7 +57,7 @@ class ProductService
 
         if ($product->getImageName() !== $data->getImageName()) {
             ImageHelper::validateExists($data->getImageName());
-            ImageHelper::delete($product->getImageName());
+            Storage::delete(ImageHelper::buildPath($data->getImageName()));
         }
 
         $this->productRepository->update($data->toTransferArray(), $id);
@@ -65,7 +66,7 @@ class ProductService
     public function deleteById($id): void
     {
         $product = new ProductDto($this->productRepository->find($id));
-        ImageHelper::delete($product->getImageName());
+        Storage::delete(ImageHelper::buildPath($product->getImageName()));
         $this->productRepository->delete($id);
     }
 }

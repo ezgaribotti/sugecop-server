@@ -7,28 +7,26 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageHelper
 {
-    public static function getPath(): string
-    {
-        return config('filesystems.storages.image');
-    }
+    const STORAGE_PATH = 'images';
 
     public static function buildPath(string $imageName): string
     {
-        return self::getPath() . chr(47) . $imageName;
+        return self::STORAGE_PATH . chr(47) . $imageName;
+    }
+
+    public static function buildAbsolutePath(string $imageName): string
+    {
+        $root = config('filesystems.disks.local.root');
+        return $root . chr(47) . self::buildPath($imageName);
     }
 
     public static function validateExists(string $imageName): void
     {
         if (!Storage::exists(self::buildPath($imageName))) {
 
-            $message = 'Imagen no encontrada en el almacenamiento interno.';
+            $message = 'Imagen no encontrada.';
 
-            throw new MessageException($message, [], 422);
+            throw new MessageException($message, [], 404);
         }
-    }
-
-    public static function delete(string $imageName): bool
-    {
-        return Storage::delete(self::buildPath($imageName));
     }
 }

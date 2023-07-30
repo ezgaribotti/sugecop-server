@@ -12,7 +12,7 @@ class ProductTransferDto extends Dto
     protected int $category_id;
     protected int $active;
     protected int $stock;
-    protected string $description;
+    protected ?string $description = null;
 
     public function getName(): string
     {

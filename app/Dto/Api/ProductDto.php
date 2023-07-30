@@ -13,7 +13,7 @@ class ProductDto extends Dto
     protected int $category_id;
     protected int $active;
     protected int $stock;
-    protected string $description;
+    protected ?string $description = null;
     protected string $created_at;
     protected string $updated_at;
 
