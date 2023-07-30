@@ -17,6 +17,7 @@ class Order extends Entity
         'identification_id',
         'shipping_address_id',
         'total_amount',
+        'observation',
     ];
 
     public function orderStatus(): BelongsTo

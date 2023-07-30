@@ -12,6 +12,7 @@ class OrderTransferDto extends Dto
     protected int $identification_id;
     protected int $shipping_address_id;
     protected float $total_amount;
+    protected ?string $observation = null;
 
     public function setOrderNumber(string $order_number): void
     {

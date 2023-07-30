@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('identification_id')->constrained('identifications');
             $table->foreignId('shipping_address_id')->constrained('addresses');
             $table->double('total_amount', 11, 2)->default(0);
+            $table->text('observation')->nullable();
             $table->timestamps();
         });
     }

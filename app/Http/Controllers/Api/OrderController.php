@@ -42,6 +42,7 @@ class OrderController extends Controller
                 'required',
                 Rule::exists('addresses', 'id')
             ],
+            'observation' => 'string|max:255',
         ]);
 
         $data = new OrderTransferDto($validated);
@@ -69,6 +70,7 @@ class OrderController extends Controller
                 'required',
                 Rule::exists('addresses', 'id')
             ],
+            'observation' => 'string|max:255',
         ]);
 
         $data = new OrderTransferDto($validated);
