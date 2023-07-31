@@ -13,7 +13,7 @@ class ProductDto extends Dto
     protected int $category_id;
     protected int $active;
     protected int $stock;
-    protected string $description;
+    protected ?string $description = null;
     protected string $created_at;
     protected string $updated_at;
 
@@ -25,5 +25,25 @@ class ProductDto extends Dto
     public function getImageName(): string
     {
         return $this->image_name;
+    }
+
+    public function getActive(): int
+    {
+        return $this->active;
+    }
+
+    public function getUnitPrice(): float
+    {
+        return $this->unit_price;
+    }
+
+    public function setStock(int $stock): void
+    {
+        $this->stock = $stock;
+    }
+
+    public function getStock(): int
+    {
+        return $this->stock;
     }
 }

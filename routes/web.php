@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\ImageHelper;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/images/{imageName}', function (string $imageName) {
+    ImageHelper::validateExists($imageName);
+    return response()->file(ImageHelper::buildAbsolutePath($imageName));
 });

@@ -73,7 +73,4 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
-    'storages' => [
-        'image' => env('IMAGE_STORAGE', 'images'),
-    ],
 ];
